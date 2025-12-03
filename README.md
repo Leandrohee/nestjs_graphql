@@ -5,6 +5,7 @@
 - https://docs.nestjs.com/first-steps
 - https://www.prisma.io/docs/guides/nestjs
 - https://docs.nestjs.com/graphql/quick-start
+- https://docs.nestjs.com/security/authentication
 
 # Libs to download
 
@@ -16,6 +17,7 @@ yarn add bcrypt
 yarn add @types/bcrypt -D
 yarn add class-validator class-transformer
 yarn add @as-integrations/express5
+yarn add @nestjs/jwt passport-jwt @types/passport-jwt passport
 ```
 
 # Commands utils

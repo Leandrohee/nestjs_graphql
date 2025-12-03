@@ -5,7 +5,9 @@ import { UserService } from './user.service';
 import { GetUserDto } from './dto/get-user.dto';
 import { EditUserDto } from './dto/edit-user.dto';
 import { UserDeleteResponse } from './entity/user_delete_response';
+import { Public } from 'src/auth/decorator/public.decorator';
 
+// @Public()
 @Resolver(() => UserEntity)
 export class UserResolver {
   constructor(private userService: UserService) {}

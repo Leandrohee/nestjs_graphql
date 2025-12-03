@@ -7,9 +7,18 @@ import { UserModule } from 'src/user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { AuthModule } from 'src/auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtGuard } from 'src/auth/guard/jwt.guard';
 
 @Module({
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard,
+    },
+  ],
   controllers: [AppController],
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -25,6 +34,7 @@ import { join } from 'path';
     }),
     PrismaModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
