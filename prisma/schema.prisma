@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model tb_user {
+  cod_user        Int @id @default(autoincrement())
+  email           String @unique
+  firstName       String 
+  lastName        String?
+  hash            String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+  is_deleted      Boolean @default(false)
+  deleted_at      DateTime? 
+}
