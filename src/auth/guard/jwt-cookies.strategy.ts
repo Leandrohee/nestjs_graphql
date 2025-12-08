@@ -13,9 +13,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
 
-interface ValidateProps {
+export interface ValidateProps {
   sub: number;
   email: string;
+  iat: number;
+  exp: number;
 }
 
 const extractJwtFromCookies = (req: Request) => {

@@ -6,6 +6,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  schemas = ["nest"]
 }
 
 model tb_user {
@@ -14,8 +15,27 @@ model tb_user {
   firstName       String 
   lastName        String?
   hash            String
-  created_at      DateTime @default(now())
+  created_at      DateTime @default(now()) 
   updated_at      DateTime @updatedAt
   is_deleted      Boolean @default(false)
   deleted_at      DateTime? 
+  rf_notes        tb_note[]
+
+  @@schema("nest")
 }
+
+
+model tb_note {
+  cod_note        Int @id @default(autoincrement())
+  title           String 
+  content         String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt 
+  is_deleted      Boolean @default(false)
+  deleted_at      DateTime?
+  cod_user        Int
+  rf_user         tb_user @relation(fields: [cod_user], references: [cod_user])
+
+  @@schema("nest")
+}
+

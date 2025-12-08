@@ -8,6 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: mypassisweak
       POSTGRES_DB: nest_test
+      TZ: America/Sao_Paulo
     networks:
       - nest_db_network #The service 'dev-db' is using this network (nest-network)
     volumes:
@@ -17,3 +18,8 @@ networks:
   nest_db_network: #Setting an network to serves as a bridge to multiples services to comunicated with each other
 volumes:
   postgres_data: #Define a volume to persist data across container restarts
+
+
+# psql -h localhost -p 5432 -U postgres -d nest_test
+# create schema nest;
+# SHOW timezone;

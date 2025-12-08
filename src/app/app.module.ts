@@ -11,6 +11,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtHeadersGuard } from 'src/auth/guard/jwt-headers.guard';
 import { JwtCookiesGuard } from 'src/auth/guard/jwt-cookies.guard';
+import { NoteModule } from 'src/note/note.module';
 
 @Module({
   providers: [
@@ -38,6 +39,7 @@ import { JwtCookiesGuard } from 'src/auth/guard/jwt-cookies.guard';
     PrismaModule,
     UserModule,
     AuthModule,
+    NoteModule,
   ],
 })
 export class AppModule {}
