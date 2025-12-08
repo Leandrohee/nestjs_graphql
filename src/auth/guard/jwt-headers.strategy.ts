@@ -10,8 +10,11 @@ interface ValidateProps {
 }
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  //"jwt" is the name that goes in the guard
+export class JwtHeadersStrategy extends PassportStrategy(
+  Strategy,
+  'jwtHeaders',
+) {
+  //"jwtHeaders" is the name that goes in the guard
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

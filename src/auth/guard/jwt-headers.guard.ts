@@ -1,7 +1,12 @@
 /**
- * Creating a guard to protect routes
+ * The JwtCookiesGuard is exacly like the JwtHeadersGuard
+ * the difference is in the Strategy used between the 2
+ * Argument 'jwtHeaders' has to be the same as his strategy
  *
- * The name 'jwt' has to match the 'jwt' in the strategy
+ *
+ * Methods:
+ *    canActivate -> verify the @Public()
+ *    getRequest  -> allow graphql
  */
 
 import { ExecutionContext, Injectable } from '@nestjs/common';
@@ -11,7 +16,7 @@ import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '../decorator/public.decorator';
 
 @Injectable()
-export class JwtGuard extends AuthGuard('jwt') {
+export class JwtHeadersGuard extends AuthGuard('jwtHeaders') {
   constructor(private reflector: Reflector) {
     super();
   }
@@ -22,7 +27,7 @@ export class JwtGuard extends AuthGuard('jwt') {
       context.getClass(),
     ]);
 
-    //If true skip the JwtGuard
+    //If true skip the JwtHeadersGuard
     if (isPublic) {
       return true;
     }
@@ -42,11 +47,11 @@ export class JwtGuard extends AuthGuard('jwt') {
  * The guards can be use in 3 ways
   
   1. Locally in Query/Mutation:
-    @UseGuards(JwtGuard)
+    @UseGuards(JwtHeadersGuard)
     @Query(() => [UserEntity])
         
   2. Locally in the Resolver
-    @UseGuards(JwtGuard)
+    @UseGuards(JwtHeadersGuard)
     @Resolver(() => UserEntity)
 
   3. Globally for the whole project in app.module.ts
@@ -55,7 +60,7 @@ export class JwtGuard extends AuthGuard('jwt') {
         AppService,
         {
           provide: APP_GUARD,
-          useClass: JwtGuard,
+          useClass: JwtHeadersGuard,
         },
       ],
  */

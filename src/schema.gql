@@ -2,8 +2,8 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AuthEntity {
-  access_token: String!
+type AuthModel {
+  message: String!
 }
 
 input CreateUserDto {
@@ -32,12 +32,12 @@ type Mutation {
   createUser(createUserInput: CreateUserDto!): UserEntity!
   deleteUser(deleteUserInput: GetUserDto!): UserDeleteResponse!
   editUser(editUserInptut: EditUserDto!): UserEntity!
-  signIn(loginInput: SignInDto!): AuthEntity!
 }
 
 type Query {
   findAllUsers: [UserEntity!]!
   findUser(getUserInput: GetUserDto!): UserEntity
+  signIn(loginInput: SignInDto!): AuthModel!
 }
 
 input SignInDto {

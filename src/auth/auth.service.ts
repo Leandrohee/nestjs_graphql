@@ -3,10 +3,11 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { SignInDto } from './dto/signin.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { SignInDto } from './graphql/dto/signin.dto';
+import { Response, response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
     private jwt: JwtService,
   ) {}
 
-  async signIn(dto: SignInDto) {
+  async signIn(dto: SignInDto, ctx: any) {
     try {
       //Verify if the user exists
       const user = await this.prisma.tb_user.findUnique({
@@ -46,7 +47,18 @@ export class AuthService {
         secret: process.env.JWT_SECRET,
         expiresIn: '1h',
       });
-      return { access_token: jwtToken };
+
+      //Sending the jwt via cookies throught graphql
+      ctx.res.cookie('access_token', jwtToken, {
+        httpOnly: true,
+        secure: false, //Use false in http and true for https
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 1000, //1h
+        // maxAge: 1 * 30 * 1000, //30s
+      });
+
+      //Return a message in the data for graphql
+      return { message: 'Jwt send successfully' };
     } catch (error) {
       return error;
     }

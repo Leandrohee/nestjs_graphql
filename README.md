@@ -6,6 +6,8 @@
 - https://www.prisma.io/docs/guides/nestjs
 - https://docs.nestjs.com/graphql/quick-start
 - https://docs.nestjs.com/security/authentication
+- https://docs.nestjs.com/techniques/cookies
+- https://docs.nestjs.com/recipes/passport
 
 # Libs to download
 
@@ -17,7 +19,9 @@ yarn add bcrypt
 yarn add @types/bcrypt -D
 yarn add class-validator class-transformer
 yarn add @as-integrations/express5
-yarn add @nestjs/jwt passport-jwt @types/passport-jwt passport
+yarn add @nestjs/jwt passport-jwt @types/passport-jwt passport @nestjs/passport
+yarn add cookie-parser
+yarn add -D @types/cookie-parser
 ```
 
 # Commands utils

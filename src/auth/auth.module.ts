@@ -2,10 +2,16 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthResolver } from './auth.resolver';
-import { JwtStrategy } from './strategy/jwt.strategy';
+import { JwtHeadersStrategy } from './guard/jwt-headers.strategy';
+import { JwtCookiesStrategy } from './guard/jwt-cookies.strategy';
 
 @Module({
   imports: [JwtModule.register({})],
-  providers: [AuthService, AuthResolver, JwtStrategy],
+  providers: [
+    AuthService,
+    AuthResolver,
+    JwtHeadersStrategy,
+    JwtCookiesStrategy,
+  ],
 })
 export class AuthModule {}

@@ -1,28 +1,33 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthEntity } from './entity/auth.entity';
-import { SignInDto } from './dto/signin.dto';
+import { Args, Resolver, Query, Context } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
+import { Public } from './decorator/public.decorator';
+import { AuthModel } from './graphql/model/auth.model';
+import { SignInDto } from './graphql/dto/signin.dto';
 
-@Resolver(() => AuthEntity)
+@Resolver(() => AuthModel)
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
-  @Mutation(() => AuthEntity)
-  async signIn(@Args('loginInput') dto: SignInDto): Promise<AuthEntity> {
-    return await this.authService.signIn(dto);
+  @Public()
+  @Query(() => AuthModel)
+  async signIn(
+    @Args('loginInput') dto: SignInDto,
+    @Context() ctx: any,
+  ): Promise<AuthModel> {
+    return await this.authService.signIn(dto, ctx);
   }
 }
 
 /**
 -------------------------------- Examples of queries and mutations -------------------------------
-mutation SignIn{
+query SignIn{
   signIn(
     loginInput: {
       email: "leandrohenrique_@live.com",
       password: "jacare1234@"
     }
   ){
-    access_token
+    message
   }
 }
 

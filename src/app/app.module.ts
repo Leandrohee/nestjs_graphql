@@ -9,14 +9,16 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { AuthModule } from 'src/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtGuard } from 'src/auth/guard/jwt.guard';
+import { JwtHeadersGuard } from 'src/auth/guard/jwt-headers.guard';
+import { JwtCookiesGuard } from 'src/auth/guard/jwt-cookies.guard';
 
 @Module({
   providers: [
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtGuard,
+      // useClass: JwtHeadersGuard,
+      useClass: JwtCookiesGuard,
     },
   ],
   controllers: [AppController],
@@ -25,8 +27,9 @@ import { JwtGuard } from 'src/auth/guard/jwt.guard';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
-      playground: false,
+      graphiql: true,
       introspection: true,
+      context: ({ req, res }) => ({ req, res }), //This line is mandatory for graphql to handle req and res
     }),
     ConfigModule.forRoot({
       isGlobal: true,

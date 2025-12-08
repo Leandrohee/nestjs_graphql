@@ -7,11 +7,12 @@ import { EditUserDto } from './dto/edit-user.dto';
 import { UserDeleteResponse } from './entity/user_delete_response';
 import { Public } from 'src/auth/decorator/public.decorator';
 
-// @Public()
+//@Public()
 @Resolver(() => UserEntity)
 export class UserResolver {
   constructor(private userService: UserService) {}
 
+  @Public()
   @Mutation(() => UserEntity)
   async createUser(
     @Args('createUserInput') dto: CreateUserDto,
