@@ -8,7 +8,11 @@ async function bootstrap() {
       Server running on: http://localhost:${process.env.SERVER_PORT ?? 3000}
     `);
 
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: 'http://localhost:5200',
+    credentials: true,
+  });
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe()); // Allow class-validator
   await app.listen(process.env.SERVER_PORT ?? 3000);

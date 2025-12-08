@@ -1,7 +1,7 @@
 /**
  * The JwtCookiesGuard is exacly like the JwtHeadersGuard
  * the difference is in the Strategy used between the 2
- * jwtCookies has to be the same as his strategy
+ * Argument 'jwtCookies' has to be the same as his strategy
  *
  * Methods:
  *    canActivate -> verify the @Public()
