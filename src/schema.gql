@@ -9,7 +9,7 @@ type AuthModel {
 input CreateUserDto {
   email: String!
   firstName: String!
-  lastName: String!
+  lastName: String
   password: String!
 }
 

@@ -13,8 +13,7 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'First Name cannot be empty' })
   firstName: string;
 
-  @Field()
-  @IsString()
+  @Field({ nullable: true })
   lastName?: string;
 
   @Field()
