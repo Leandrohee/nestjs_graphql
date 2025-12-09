@@ -29,14 +29,14 @@ input GetUserDto {
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserDto!): UserEntity!
+  createUser(createUserInput: CreateUserDto!): UserModel!
   deleteUser(deleteUserInput: GetUserDto!): UserDeleteResponse!
-  editUser(editUserInptut: EditUserDto!): UserEntity!
+  editUser(editUserInptut: EditUserDto!): UserModel!
 }
 
 type Query {
-  findAllUsers: [UserEntity!]!
-  findUser(getUserInput: GetUserDto!): UserEntity
+  findAllUsers: [UserModel!]!
+  findUser(getUserInput: GetUserDto!): UserModel
   signIn(loginInput: SignInDto!): AuthModel!
 }
 
@@ -50,7 +50,7 @@ type UserDeleteResponse {
   message: String!
 }
 
-type UserEntity {
+type UserModel {
   cod_user: Int!
   created_at: DateTime!
   deleted_at: DateTime

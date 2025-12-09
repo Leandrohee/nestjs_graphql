@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { Request } from 'express';
 import { ValidateProps } from 'src/auth/guard/jwt-cookies.strategy';
+import brazilTimeNow from 'src/utils/brazil-time';
 
 @Injectable()
 export class NoteService {
@@ -21,6 +22,7 @@ export class NoteService {
           cod_user: user.sub,
           title: dto.title,
           content: dto.content,
+          updated_at: brazilTimeNow(),
         },
       });
 

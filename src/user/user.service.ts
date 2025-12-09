@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './graphql/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { GetUserDto } from './dto/get-user.dto';
-import { EditUserDto } from './dto/edit-user.dto';
+import { GetUserDto } from './graphql/dto/get-user.dto';
+import { EditUserDto } from './graphql/dto/edit-user.dto';
 
 @Injectable()
 export class UserService {

@@ -15,8 +15,8 @@ model tb_user {
   firstName       String 
   lastName        String?
   hash            String
-  created_at      DateTime @default(now()) 
-  updated_at      DateTime @updatedAt
+  created_at      DateTime @db.Timestamptz @default(dbgenerated("now()"))
+  updated_at      DateTime @db.Timestamptz @default(dbgenerated("now()"))
   is_deleted      Boolean @default(false)
   deleted_at      DateTime? 
   rf_notes        tb_note[]
@@ -29,8 +29,8 @@ model tb_note {
   cod_note        Int @id @default(autoincrement())
   title           String 
   content         String
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt 
+  created_at      DateTime @db.Timestamptz @default(dbgenerated("now()"))
+  updated_at      DateTime @db.Timestamptz
   is_deleted      Boolean @default(false)
   deleted_at      DateTime?
   cod_user        Int
