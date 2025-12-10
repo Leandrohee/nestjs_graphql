@@ -8,6 +8,7 @@
 - https://docs.nestjs.com/security/authentication
 - https://docs.nestjs.com/techniques/cookies
 - https://docs.nestjs.com/recipes/passport
+- https://docs.nestjs.com/openapi/introduction
 
 # Libs to download
 
@@ -22,6 +23,8 @@ yarn add @as-integrations/express5
 yarn add @nestjs/jwt passport-jwt @types/passport-jwt passport @nestjs/passport
 yarn add cookie-parser
 yarn add -D @types/cookie-parser
+yarn add @nestjs/swagger
+yarn add -D @types/swagger-ui-express
 ```
 
 # Commands utils

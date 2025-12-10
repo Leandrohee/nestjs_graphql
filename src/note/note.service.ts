@@ -4,6 +4,7 @@ import { CreateNoteDto } from './dto/create-note.dto';
 import { Request } from 'express';
 import { ValidateProps } from 'src/auth/guard/jwt-cookies.strategy';
 import brazilTimeNow from 'src/utils/brazil-time';
+import { UpdateNoteDto } from './dto/update-note.dto';
 
 @Injectable()
 export class NoteService {
@@ -27,6 +28,44 @@ export class NoteService {
       });
 
       return noteCreated;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getNotes(req: Request) {
+    const user = req.user as ValidateProps;
+    const cod_user = user.sub;
+    try {
+      const notes = this.prisma.tb_note.findMany({
+        where: {
+          cod_user: cod_user,
+        },
+      });
+
+      return notes;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async updateNote(dto: UpdateNoteDto, req: Request) {
+    try {
+      const user = req.user as ValidateProps;
+
+      const note = await this.prisma.tb_note.update({
+        where: {
+          cod_user: user.sub,
+          cod_note: dto.cod_note,
+          is_deleted: false,
+        },
+        data: {
+          title: dto.title,
+          content: dto.content,
+          updated_at: brazilTimeNow(),
+        },
+      });
+      return note;
     } catch (error) {
       return error;
     }
