@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateNoteDto } from './dto/create-note.dto';
+import { CreateNoteDto } from './rest/dto/create-note.dto';
 import { Request } from 'express';
 import { ValidateProps } from 'src/auth/guard/jwt-cookies.strategy';
 import brazilTimeNow from 'src/utils/brazil-time';
-import { UpdateNoteDto } from './dto/update-note.dto';
+import { UpdateNoteDto } from './rest/dto/update-note.dto';
 
 @Injectable()
 export class NoteService {
@@ -37,15 +37,25 @@ export class NoteService {
     const user = req.user as ValidateProps;
     const cod_user = user.sub;
     try {
-      const notes = this.prisma.tb_note.findMany({
+      const notes = await this.prisma.tb_note.findMany({
         where: {
           cod_user: cod_user,
         },
       });
 
-      return notes;
+      const notesFormat = notes.map((item) => {
+        return {
+          title: item.title,
+          content: item.content,
+          create_at: item.created_at,
+          cod_note: item.cod_note,
+          cod_user: item.cod_user,
+        };
+      });
+
+      return notesFormat;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
