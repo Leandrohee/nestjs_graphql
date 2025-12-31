@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { ValidateProps } from 'src/auth/guard/jwt-cookies.strategy';
 import brazilTimeNow from 'src/utils/brazil-time';
 import { UpdateNoteDto } from './rest/dto/update-note.dto';
+import { DeleteNoteDto } from './rest/dto/delete-note.dto';
 
 @Injectable()
 export class NoteService {
@@ -29,7 +30,7 @@ export class NoteService {
 
       return noteCreated;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -40,6 +41,7 @@ export class NoteService {
       const notes = await this.prisma.tb_note.findMany({
         where: {
           cod_user: cod_user,
+          is_deleted: false,
         },
       });
 
@@ -75,9 +77,45 @@ export class NoteService {
           updated_at: brazilTimeNow(),
         },
       });
-      return note;
+
+      return {
+        message: 'Updated successfully',
+      };
     } catch (error) {
-      return error;
+      throw error;
+    }
+  }
+
+  async deleteNote(dto: DeleteNoteDto, req: Request) {
+    const user = req.user as ValidateProps;
+
+    console.log(user.sub);
+    console.log(dto.cod_note);
+
+    try {
+      const noteDeleted = await this.prisma.tb_note.updateMany({
+        where: {
+          cod_user: user.sub,
+          cod_note: dto.cod_note,
+          is_deleted: false,
+        },
+        data: {
+          is_deleted: true,
+          deleted_at: brazilTimeNow(),
+        },
+      });
+
+      if (noteDeleted.count === 0) {
+        throw new NotFoundException('This note was not found');
+      }
+
+      return {
+        cod_user: user.sub,
+        cod_note: dto.cod_note,
+        deleted_at: brazilTimeNow(),
+      };
+    } catch (error) {
+      throw error;
     }
   }
 }

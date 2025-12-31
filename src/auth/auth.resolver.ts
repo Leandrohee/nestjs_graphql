@@ -1,3 +1,7 @@
+/**
+ * This resolver is to handle authentication via graphql
+ */
+
 import { Args, Resolver, Query, Context } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { Public } from './decorator/public.decorator';
