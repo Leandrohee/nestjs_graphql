@@ -19,7 +19,10 @@ model tb_user {
   updated_at      DateTime @db.Timestamptz @default(dbgenerated("now()"))
   is_deleted      Boolean @default(false)
   deleted_at      DateTime? 
+
+  //Relações
   rf_notes        tb_note[]
+  rf_posts        tb_post[]
 
   @@schema("nest")
 }
@@ -34,8 +37,24 @@ model tb_note {
   is_deleted      Boolean @default(false)
   deleted_at      DateTime?
   cod_user        Int
+
+  //Relações
   rf_user         tb_user @relation(fields: [cod_user], references: [cod_user])
 
   @@schema("nest")
 }
 
+model tb_post {
+  cod_post      Int @id @default(autoincrement())
+  cod_user      Int
+  content       String
+  created_at    DateTime @db.Timestamptz @default(dbgenerated("now()"))
+  updated_at    DateTime @db.Timestamptz
+  is_deleted    Boolean @default(false)
+  deleted_at    DateTime?
+
+  //Relações
+  rf_user       tb_user @relation(fields: [cod_user], references: [cod_user])
+
+  @@schema("nest")
+}

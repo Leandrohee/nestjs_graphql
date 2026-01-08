@@ -12,6 +12,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtHeadersGuard } from 'src/auth/guard/jwt-headers.guard';
 import { JwtCookiesGuard } from 'src/auth/guard/jwt-cookies.guard';
 import { NoteModule } from 'src/note/note.module';
+import { PostModule } from 'src/post/post.module';
 
 @Module({
   providers: [
@@ -40,6 +41,7 @@ import { NoteModule } from 'src/note/note.module';
     UserModule,
     AuthModule,
     NoteModule,
+    PostModule,
   ],
 })
 export class AppModule {}

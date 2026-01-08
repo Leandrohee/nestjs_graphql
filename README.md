@@ -25,6 +25,7 @@ yarn add cookie-parser
 yarn add -D @types/cookie-parser
 yarn add @nestjs/swagger
 yarn add -D @types/swagger-ui-express
+yarn add @nestjs/websockets @nestjs/platform-socket.io
 ```
 
 # Commands utils
@@ -39,7 +40,7 @@ npx prisma --help
 npx prisma init
 npx prisma validate
 npx prisma migrate reset
-npx prisma migrate dev
-npx prisma migrate deploy
+npx prisma migrate dev              #for development, always compares what is in the shcemas to what is in the database
+npx prisma migrate deploy           #for production, just run the migrations
 npx prisma generate
 ```

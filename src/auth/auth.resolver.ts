@@ -5,7 +5,7 @@
 import { Args, Resolver, Query, Context } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { Public } from './decorator/public.decorator';
-import { AuthModel } from './graphql/model/auth.model';
+import { AuthModel, AuthSignOutModel } from './graphql/model/auth.model';
 import { SignInDto } from './graphql/dto/signin.dto';
 
 @Resolver(() => AuthModel)
@@ -19,6 +19,11 @@ export class AuthResolver {
     @Context() ctx: any,
   ): Promise<AuthModel> {
     return await this.authService.signIn(dto, ctx);
+  }
+
+  @Query(() => AuthSignOutModel)
+  async signOut(@Context() ctx: any): Promise<AuthSignOutModel> {
+    return await this.authService.signOut(ctx);
   }
 }
 

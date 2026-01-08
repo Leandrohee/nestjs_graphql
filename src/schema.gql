@@ -6,6 +6,11 @@ type AuthModel {
   message: String!
 }
 
+type AuthSignOutModel {
+  message: String!
+  success: Boolean!
+}
+
 input CreateUserDto {
   email: String!
   firstName: String!
@@ -38,6 +43,7 @@ type Query {
   findAllUsers: [UserModel!]!
   findUser(getUserInput: GetUserDto!): UserModel
   signIn(loginInput: SignInDto!): AuthModel!
+  signOut: AuthSignOutModel!
 }
 
 input SignInDto {

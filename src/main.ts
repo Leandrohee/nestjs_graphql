@@ -6,7 +6,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   console.log(`
-    Server running on: http://localhost:${process.env.SERVER_PORT ?? 3000}
+    Server running on:        http://localhost:${process.env.SERVER_PORT ?? 3000}
+    Playground running on:    http://localhost:${process.env.SERVER_PORT ?? 3000}/graphql
+    Swagger runnig on:        http://localhost:${process.env.SERVER_PORT ?? 3000}/api
+    Swagger-json runnig on:   http://localhost:${process.env.SERVER_PORT ?? 3000}/api-json
   `);
 
   const app = await NestFactory.create(AppModule);

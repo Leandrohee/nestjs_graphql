@@ -17,6 +17,10 @@ export class AuthService {
     private jwt: JwtService,
   ) {}
 
+  /**
+   *
+   * Method to signin via graphql
+   */
   async signIn(dto: SignInDto, ctx: any) {
     try {
       //Verify if the user exists
@@ -65,6 +69,30 @@ export class AuthService {
     }
   }
 
+  /**
+   *
+   * Methodo to signout via graphql
+   */
+  async signOut(ctx: any) {
+    try {
+      ctx.res.cookie('access_token', '', {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        expires: new Date(0), // Sets expiration to 1970
+        maxAge: 0,
+      });
+
+      return { success: true, message: 'Signed out successfully' };
+    } catch (error) {
+      return { success: false, message: error.error ?? 'error to signout' };
+    }
+  }
+
+  /**
+   *
+   * Method to signin via Rest
+   */
   async signInRest(dto: SignInDtoRest, res: Response) {
     try {
       //Verify if the user exists
