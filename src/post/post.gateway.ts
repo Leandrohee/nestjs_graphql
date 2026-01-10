@@ -4,6 +4,7 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  WsException,
 } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
 import { PostService } from './post.service';
@@ -13,7 +14,9 @@ import { JwtService } from '@nestjs/jwt';
 import { WebSocketAuthGateway } from 'src/auth/gateway/websocket-auth.gateway';
 
 // @UseGuards(WsJwtGuard)
-@WebSocketGateway({ cors: { origin: '*' } })
+@WebSocketGateway({
+  cors: { origin: 'http://localhost:5200', credentials: true },
+})
 export class PostWebSocketGateway extends WebSocketAuthGateway {
   @WebSocketServer() server: Server;
   constructor(
@@ -28,10 +31,18 @@ export class PostWebSocketGateway extends WebSocketAuthGateway {
     @MessageBody() data: { content: string },
     @ConnectedSocket() client: Socket,
   ) {
-    const user = client.data.user;
-    console.log(user);
+    try {
+      const user = client.data.user;
+      const postCreated = await this.postService.createPost(data, user);
 
-    return await this.postService.createPost(data, user);
+      //Broadcasting the new post to all the others clients
+      this.server.emit('newPost', postCreated);
+
+      return postCreated;
+    } catch (error) {
+      //Send error back to the sender
+      throw new WsException(error.message);
+    }
   }
 
   /**
