@@ -35,12 +35,30 @@ export class PostWebSocketGateway extends WebSocketAuthGateway {
       const user = client.data.user;
       const postCreated = await this.postService.createPost(data, user);
 
-      //Broadcasting the new post to all the others clients
+      //Broadcasting the new post to all the others clients including the sender
       this.server.emit('newPost', postCreated);
 
       return postCreated;
     } catch (error) {
       //Send error back to the sender
+      throw new WsException(error.message);
+    }
+  }
+
+  @SubscribeMessage('deletePost')
+  async handleDeletePost(
+    @MessageBody() data: { cod_post: number },
+    @ConnectedSocket() client: Socket,
+  ) {
+    try {
+      const user = client.data.user;
+      const postDeleted = await this.postService.deletePost(data, user);
+
+      //Broadcasting the post delted to all the others clients including the sender
+      this.server.emit('postDeleted', postDeleted);
+
+      return postDeleted;
+    } catch (error) {
       throw new WsException(error.message);
     }
   }

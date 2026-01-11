@@ -9,6 +9,9 @@ import { Socket } from 'socket.io';
  * It verify the authenticyty of the jwt on the cookie.
  *
  * This class has to be extended on the normal Websocket class
+ *
+ * Differnt from the websocket.guard this class protects the connection while the
+ * websocket.guard allows all the connections and protects only the response.
  */
 export abstract class WebSocketAuthGateway
   implements OnGatewayConnection, OnGatewayDisconnect
